@@ -180,8 +180,27 @@ Term* parse_and_add_term(char* expr, int begin, int end, Polynomial* p_poly) {
 
 	if (i >= end) {
 		add_term(coef, 0, p_poly);
+		return 1;
 	}
-	if()
+	if (expr[i] != 'x') {
+		return 0;
+		i++;
+	}
+	if (i >= end) {
+		add_term(coef, 1, p_poly);
+		return 1;
+	}
+	if (expr[i] != '^') {
+		return 0;
+		i++;
+	}
+	expo = 0;
+	while (i < end && expr[i] >= '0' && expr[i] <= '9') {
+		expo = expo * 10 + (int)(expr[i] - '0');
+		i++;
+	}
+	add_term(coef, expo, p_poly);
+	return 1;
 }
 Polynomial* create_by_parse_polynomial(char name, char* body) {
 	Polynomial* ptr_poly = create_polynomial_instance(name);
