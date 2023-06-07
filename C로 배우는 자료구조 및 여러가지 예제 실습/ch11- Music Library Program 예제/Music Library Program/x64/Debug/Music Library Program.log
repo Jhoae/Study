@@ -1,9 +1,2 @@
 ﻿  library.cpp
-C:\Users\ohjae\OneDrive\바탕 화면\따배C\Music Library Program\Music Library Program\library.cpp(168,10): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'char *'
-C:\Users\ohjae\OneDrive\바탕 화면\따배C\Music Library Program\Music Library Program\library.cpp(168,10): warning C4313: 'printf': '%d' in format string conflicts with argument 1 of type 'char *'
-C:\Users\ohjae\OneDrive\바탕 화면\따배C\Music Library Program\Music Library Program\library.cpp(168,10): warning C4473: 'printf' : not enough arguments passed for format string
-C:\Users\ohjae\OneDrive\바탕 화면\따배C\Music Library Program\Music Library Program\library.cpp(168,10): message : placeholders and their parameters expect 3 variadic arguments, but 2 were provided
-C:\Users\ohjae\OneDrive\바탕 화면\따배C\Music Library Program\Music Library Program\library.cpp(168,10): message : the missing variadic argument 3 is required by format string '%s'
-  string_tools.cpp
-  Generating Code...
   Music Library Program.vcxproj -> C:\Users\ohjae\OneDrive\바탕 화면\따배C\Music Library Program\x64\Debug\Music Library Program.exe

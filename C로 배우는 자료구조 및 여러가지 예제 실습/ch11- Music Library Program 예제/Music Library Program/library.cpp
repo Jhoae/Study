@@ -1,6 +1,9 @@
+#pragma warning (disable:4996)
 #include "library.h"
 #include <stdio.h>
+#include "string_tools.h"
 
+#define BUFFER_LENGTH 200
 #define NUM_CHARS 256 // 2^8
 // 배열의 타입은, 배열 한 칸에 저장되는 데이터의 타입
 Artist* artist_directory[NUM_CHARS]; 
@@ -15,6 +18,65 @@ void initialize()
 {
 	for (int i = 0; i < NUM_CHARS; i++)
 		artist_directory[i] = NULL;
+}
+
+void load(FILE* fp) 
+{
+	char buffer[BUFFER_LENGTH];
+	char* name, * title, * path;
+
+	while (1) {
+		if (read_line(fp, buffer, BUFFER_LENGTH) <= 0) // 파일을 다 읽음
+			break;
+
+		name = strtok(buffer, "#"); // 구분문자 #
+		if (strcmp(name, " ") == 0) // 해당 항목이 존재하지 않는다면
+			name = NULL;
+		else 
+			name = strdup(name);
+
+		title = strtok(NULL, "#"); // 구분문자 #
+		if (strcmp(title, " ") == 0) // 해당 항목이 존재하지 않는다면
+			title = NULL;
+		else
+			title = strdup(title);
+
+		path = strtok(NULL, "#"); // 구분문자 #
+		if (strcmp(path, " ") == 0) // 해당 항목이 존재하지 않는다면
+			path = NULL;
+		else
+			path = strdup(path);
+
+		//printf("%s %s %s\n", name, title, path);
+		add_song(name, title, path);
+	}
+}
+
+void search_song(char* artist, char* title)
+{
+	Artist* ptr_artist = find_artist(artist);
+	if (ptr_artist == NULL) {
+		printf("No Such artist exists.");
+		return;
+	}
+
+	SNode* ptr_snode = ptr_artist->head;
+	while (ptr_snode != NULL && strcmp(ptr_snode->song->title, title) < 0) // 없음
+		ptr_snode = ptr_snode;
+
+	if (ptr_snode != NULL && strcmp(ptr_snode->song->title, title) == 0) {// 존재
+		printf("Found:\n");
+		print_song(ptr_snode->song);
+	}
+	else {
+		printf("No such song exists.\n");
+		return;
+	}
+}
+
+void search_song(char *artist)
+{
+
 }
 
 Artist* create_artist_instance(char* name)
@@ -80,6 +142,9 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
 	 SNode* ptr_snode = (SNode*)malloc(sizeof(SNode));
 
 	 ptr_snode->song = ptr_song;
+	 ptr_snode->next = NULL;
+	 ptr_snode->prev = NULL;
+
 
 	 // insert node
 	 insert_node(ptr_artist, ptr_snode);
@@ -87,17 +152,16 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
 
  void insert_node(Artist* ptr_artist, SNode* ptr_snode)
  {
-	
 	 SNode* p = ptr_artist->head;
 	 while (p != NULL && strcmp(p->song->title, ptr_snode->song->title) < 0) {
 		 p = p->next;
 	 }
 
-	 // 'ptr_snode'를 이중연결리스트의 'p'노드 전에 삽입
 	 // 1. empty list
 	 // 2.head에 삽입
 	 // 3.tail에 삽입
 	 // 4.중간에 삽입
+
 	 if (ptr_artist->head == NULL) { // empty list에 삽입
 		 ptr_artist->head = ptr_snode;
 		 ptr_artist->tail = ptr_snode;
@@ -112,7 +176,7 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
 		 ptr_artist->tail->next = ptr_snode;
 		 ptr_artist->tail = ptr_snode;
 	 }
-	 else {
+	 else {	 // 'ptr_snode'를 이중연결리스트의 'p'노드 전에 삽입
 		 ptr_snode->next = p;
 		 ptr_snode->prev = p->prev;
 		 p->prev->next = ptr_snode;
@@ -146,7 +210,6 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
  void status()
  {
 	 for (int i = 0; i < NUM_CHARS; i++) {
-
 		 Artist* p = artist_directory[i];
 		 while (p != NULL) {
 			 print_artist(p);
@@ -163,7 +226,8 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
 		 ptr_snode = ptr_snode->next;
 	 }
  }
-
+ 
+ 
  void print_song(Song* ptr_song) {
-	 printf("    %d: %s, %s\n", ptr_song->title, ptr_song->path);
+	 printf("    %d: %s, %s\n", ptr_song->index, ptr_song->title, ptr_song->path);
  }

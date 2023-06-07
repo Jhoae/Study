@@ -11,11 +11,32 @@
 
 void process_command();
 void handle_add();
+void handle_load();
+void handle_search();
 
 int main() 
 {
 	initialize(); // artist_directory 초기화
+	handle_load();
 	process_command();
+}
+
+void handle_load()
+{
+	char buffer[BUFFER_LENGTH];
+
+	printf("Data file name ? ");
+	if (read_line(stdin, buffer, BUFFER_LENGTH) <= 0)
+		return; // data 파일 load X
+	
+	FILE* fp = fopen(buffer, "r");
+	if (fp == NULL) {
+		printf("No such file exists.\n");
+		return;
+	}
+
+	load(fp);
+	fclose(fp);
 }
 
 void process_command() 
@@ -32,8 +53,8 @@ void process_command()
 		command = strtok(command_line, " ");
 		if (strcmp(command, "add") == 0)
 			handle_add();
-		//else if (strcmp(command, "search") == 0)
-		//	handle_search();
+		else if (strcmp(command, "search") == 0)
+			handle_search();
 		//else if (strcmp(command, "remove") == 0)
 		//	handle_remove();
 		else if (strcmp(command, "status") == 0)
@@ -46,6 +67,25 @@ void process_command()
 			break;
 	}
 
+}
+
+void handle_search()
+{
+	char name[BUFFER_LENGTH], title[BUFFER_LENGTH];
+	
+	printf("   Artist: ");
+	if (read_line(stdin, name, BUFFER_LENGTH) <= 0) {
+		printf("   Artist name required.");
+		return;
+	}
+
+	printf("   Title: ");
+	int title_len = read_line(stdin, title, BUFFER_LENGTH); 
+
+	if (title_len <= 0) // title은 입력X
+		search_song(name);
+	else
+		search_song(name, title);
 }
 
 
