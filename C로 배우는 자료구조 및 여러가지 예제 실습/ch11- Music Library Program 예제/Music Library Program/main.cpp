@@ -13,6 +13,8 @@ void process_command();
 void handle_add();
 void handle_load();
 void handle_search();
+void handle_play
+();
 
 int main() 
 {
@@ -59,14 +61,21 @@ void process_command()
 		//	handle_remove();
 		else if (strcmp(command, "status") == 0)
 			status();
-		//else if (strcmp(command, "play") == 0)
-		//	handle_play();
+		else if (strcmp(command, "play") == 0)
+			handle_play();
 		//else if (strcmp(command, "save") == 0)
 		//	handle_save();
 		else if (strcmp(command, "exit") == 0)
 			break;
 	}
 
+}
+
+void handle_play() 
+{
+	char* id_str = strtok(NULL, " ");
+	int index = atoi(id_str); // int로 변경
+	play(index);
 }
 
 void handle_search()
