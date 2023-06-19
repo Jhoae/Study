@@ -15,6 +15,7 @@ void handle_load();
 void handle_search();
 void handle_play();
 void handle_save();
+void handle_remove();
 
 int main() 
 {
@@ -57,8 +58,8 @@ void process_command()
 			handle_add();
 		else if (strcmp(command, "search") == 0)
 			handle_search();
-		//else if (strcmp(command, "remove") == 0)
-		//	handle_remove();
+		else if (strcmp(command, "remove") == 0)
+			handle_remove();
 		else if (strcmp(command, "status") == 0)
 			status();
 		else if (strcmp(command, "play") == 0)
@@ -74,6 +75,14 @@ void process_command()
 	}
 
 }
+
+void handle_remove()
+{
+	char* id_str = strtok(NULL, " ");
+	int index = atoi(id_str); // int로 변경
+	remove(index);
+}
+
 
 void handle_save()
 {

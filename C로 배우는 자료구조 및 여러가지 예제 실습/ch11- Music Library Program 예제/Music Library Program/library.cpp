@@ -23,6 +23,8 @@ SNode* find_snode(Artist* ptr_artist, char* title);
 void insert_to_index_directory(Song* ptr_song);
 void save_artist(Artist* p, FILE* fp);
 void save_song(Song* ptr_song, FILE* fp);
+void remove_snode(Artist* ptr_artist, SNode* ptr_snode);
+void destory_song(Song* ptr_song);
 
 
 void initialize() 
@@ -359,3 +361,72 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
 	 ShellExecuteW(GetDesktopWindow(), L"open", wpath, NULL, NULL, SW_SHOW);
 
 }
+
+ void remove(int index) 
+ {
+	 SNode* q = NULL; // p의 바로 이전 노드
+	 SNode* p= index_directory[index % SIZE_INDEX_TABLE]; // head snode
+	 while (p != NULL && p->song->index != index) {
+	 	 q = p;
+	 	 p = p->next; // 전진
+	 }
+
+	 if (p == NULL) { // index_directory가 빈 list 또는 노래가 존재 x => 못찾음
+	 	 printf("No such song exists.");
+	 	 return;
+	 }
+
+	 Song* ptr_song = p->song;
+	 if (q == NULL) { // p가 head node => remove_first
+	 	 index_directory[index % SIZE_INDEX_TABLE] = p->next; // head = p.next를 의미
+	 }
+	 else { // remove after q
+		 q->next = p->next; // q.next = q.next.next를 의미
+	 }
+	 free(p);
+
+	 Artist* ptr_artist = ptr_song->artist;
+	 
+	 // ptr_artist의 이중연결리스트 에서 SNode 찾기
+	 SNode* ptr_snode = find_snode(ptr_artist, ptr_song->title);
+	 if (ptr_snode == NULL) { // 비정상 -> 코드상 오류 수정필요
+		 printf("Not found snode - something wrong.\n");
+		 return;
+	 }
+	 
+	 remove_snode(ptr_artist, ptr_snode);
+	 destory_song(ptr_song);
+ }
+
+ void remove_snode(Artist *ptr_artist, SNode *ptr_snode) 
+ {
+	 SNode* first = ptr_artist->head;
+	 SNode* last = ptr_artist->tail;
+
+	 if (ptr_snode == first && ptr_snode == last) { // 유일한 node일 경우
+		 first = NULL;
+		 last = NULL;
+	 }
+	 else if (ptr_snode == first) { // remove first node
+		 ptr_snode->next->prev = NULL; // ptr_snode.next가 head가 되므로
+		 first = ptr_snode->next;
+	 }
+	 else if (ptr_snode == last) { // remove last node
+		 ptr_snode->next->prev = NULL; // ptr_snode.next가 head가 되므로
+		 last = ptr_snode->prev;
+	 }
+	 else { // in the middle
+		 ptr_snode->prev = ptr_snode->next;
+		 ptr_snode->next->prev = ptr_snode->prev;
+	 }
+	 free(ptr_snode);
+ }
+
+ void destory_song(Song* ptr_song)
+ {
+	 if (ptr_song->title != NULL)
+		 free(ptr_song->title);
+	 if (ptr_song->path != NULL)
+		 free(ptr_song->path);
+	 free(ptr_song);
+ }
