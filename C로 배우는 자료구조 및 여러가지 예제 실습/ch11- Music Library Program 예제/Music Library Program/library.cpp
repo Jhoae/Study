@@ -1,14 +1,18 @@
 #pragma warning (disable:4996)
 #include "library.h"
-#include <stdio.h>
 #include "string_tools.h"
+
+#include <stdio.h>
+#include <windows.h>
 
 #define BUFFER_LENGTH 200
 #define SIZE_INDEX_TABLE 100
 #define NUM_CHARS 256 // 2^8
 // 배열의 타입은, 배열 한 칸에 저장되는 데이터의 타입
+
 Artist* artist_directory[NUM_CHARS]; 
 SNode* index_directory[SIZE_INDEX_TABLE];
+
 int num_index = 0;
 
 void insert_node(Artist* ptr_artist, SNode* ptr_snode);
@@ -17,6 +21,8 @@ void print_song(Song* ptr_song);
 Artist* find_artist(char* input_name);
 SNode* find_snode(Artist* ptr_artist, char* title);
 void insert_to_index_directory(Song* ptr_song);
+void save_artist(Artist* p, FILE* fp);
+void save_song(Song* ptr_song, FILE* fp);
 
 
 void initialize() 
@@ -290,11 +296,52 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
  }
 
  SNode* find_song(int index) {
-	 SNode* ptr_snode = index_directory[index % SIZE_INDEX_TABLE];
+	 SNode* ptr_snode = index_directory[index % SIZE_INDEX_TABLE]; // head snode
 	 while (ptr_snode != NULL && ptr_snode->song->index != index)
 		 ptr_snode = ptr_snode->next; // 전진
 
 	 return ptr_snode;
+ }
+
+ void save(FILE* fp) 
+ {
+	 for (int i = 0; i < NUM_CHARS; i++) {
+		 Artist* p = artist_directory[i];
+		 while (p != NULL) {
+			 save_artist(p, fp);
+			 p = p->next;
+		 }
+	 }
+ }
+
+ void save_artist(Artist* p, FILE* fp) {
+	 SNode* ptr_snode = p->head;
+	 while (ptr_snode != NULL) {
+		 save_song(ptr_snode->song, fp);
+		 ptr_snode = ptr_snode->next;
+	 }
+ }
+
+ void save_song(Song* ptr_song, FILE* fp)
+ {
+	 // 가수#제목#저장위치# 형태(빈값은 " "로 대체)의 text로 저장
+	 if (ptr_song->artist != NULL)
+		 fprintf(fp, "%s#", ptr_song->artist->name);
+	 else 
+		 fprintf(fp, " #");
+
+	
+	 if (ptr_song->title != NULL)
+		fprintf(fp, "%s#", ptr_song->title);
+	else
+		fprintf(fp, " #");
+
+	 if (ptr_song->path != NULL)
+		 fprintf(fp, "%s#\n", ptr_song->path);
+	 else
+		 fprintf(fp, " #\n");
+
+
  }
 
  void play(int index)
@@ -303,6 +350,12 @@ Song* create_song_instance(Artist* ptr_artist, char* title, char* path) {
 	 if (ptr_snode == NULL) {
 		 printf("No such song exists.\n");
 	 }
-	 
-	 printf("Found the song: %s\n", ptr_snode->song->title);
+		
+	 // chatGPT 참고해서 수정
+	 // ShellExecute(GetDesktopWindow(), "open", ptr_snode->song->path, NULL, NULL, SW_SHOW);
+	 wchar_t wpath[MAX_PATH];
+	 MultiByteToWideChar(CP_UTF8, 0, ptr_snode->song->path, -1, wpath, MAX_PATH);
+	 ShellExecuteW(GetDesktopWindow(), L"open", wpath, NULL, NULL, SW_SHOW);
+	 ShellExecuteW(GetDesktopWindow(), L"open", wpath, NULL, NULL, SW_SHOW);
+
 }

@@ -35,5 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="list.txt" />
+    <Text Include="tmpdata.txt" />
   </ItemGroup>
 </Project>

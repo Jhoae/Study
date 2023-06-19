@@ -13,8 +13,8 @@ void process_command();
 void handle_add();
 void handle_load();
 void handle_search();
-void handle_play
-();
+void handle_play();
+void handle_save();
 
 int main() 
 {
@@ -63,12 +63,24 @@ void process_command()
 			status();
 		else if (strcmp(command, "play") == 0)
 			handle_play();
-		//else if (strcmp(command, "save") == 0)
-		//	handle_save();
+		else if (strcmp(command, "save") == 0) {
+			char* tmp = strtok(NULL, " ");
+			if (strcmp(tmp, "as") != 0) // save as 파일명.txt 형태가 아니라면
+				continue; // 무시
+			handle_save();
+		}
 		else if (strcmp(command, "exit") == 0)
 			break;
 	}
 
+}
+
+void handle_save()
+{
+	char* file_name = strtok(NULL, " "); // file 이름을 token화
+	FILE* fp = fopen(file_name, "w");
+	save(fp);
+	fclose(fp);
 }
 
 void handle_play() 
