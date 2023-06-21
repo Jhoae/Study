@@ -1,12 +1,14 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
+#define MAX_LENGTH 100
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "stack.c"
 
-static char OPERATORS[] = "+-*/";
-static int PRECEDENCE[] = { 1,1,2,3 };
+
+static char OPERATORS[] = "+-*/()";
+static int PRECEDENCE[] = { 1,1,2,2,-1,-1 };
 
 typedef char Item;
 typedef struct stack_type* Stack;
@@ -28,7 +30,7 @@ void handle_exception(const char* err_msg) {
 }
 
 char* process_op(char op, char* pos) {
-	if (is_empty(operator_stack))
+	if (is_empty(operator_stack) || op == '(')
 		push(operator_stack, op);
 	else {
 		char top_op = peek(operator_stack);
@@ -37,12 +39,15 @@ char* process_op(char op, char* pos) {
 		else {
 			while (!is_empty(operator_stack) && precedence(op) <= precedence(top_op)) {
 				pop(operator_stack);
-				sprintf(pos, "%c ", top_op);
+				if (top_op == '(')
+					break;
+				sprintf(pos, "%c ", top_op);				
 				pos += 2;
 				if (!is_empty(operator_stack))
 					top_op = (char)peek(operator_stack);
 			}
-			push(operator_stack, op);
+			if (op != ')')
+				push(operator_stack, op);
 		}
 	}
 	return pos;
@@ -71,6 +76,8 @@ char* convert(char* infix) {
 
 	while (!is_operator(operator_stack)) {
 		char op = (char)pop(operator_stack);
+		if (op == '(') // error
+			handle_exception("Unmatched");
 		sprintf(pos, "#c ", op);
 		pos += 2;
 	}
@@ -80,6 +87,11 @@ char* convert(char* infix) {
 
 int main()
 {
+	char infix[MAX_LENGTH];
+	read_line(stdin, infix, MAX_LENGTH);
 
+	printf(" %s := ", infix);
+	char* postfix = convert(infix);
+	printf("%d\n", eval(postfix));
 }
 
