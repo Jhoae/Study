@@ -1,0 +1,5 @@
+﻿  4_05.cpp
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 3- Variable scope and types\4_05 형변환 Type conversion\4_05.cpp(25,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 3- Variable scope and types\4_05 형변환 Type conversion\4_05.cpp(28,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 3- Variable scope and types\4_05 형변환 Type conversion\4_05.cpp(29,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  4_05 형변환 Type conversion.vcxproj -> C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 3- Variable scope and types\x64\Debug\4_05 형변환 Type conversion.exe
