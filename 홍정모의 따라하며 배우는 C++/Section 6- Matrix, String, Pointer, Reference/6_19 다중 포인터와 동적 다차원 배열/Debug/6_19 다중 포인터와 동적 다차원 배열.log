@@ -1,0 +1,4 @@
+﻿  6_19.cpp
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 6- Matrix, String, Pointer, Reference\6_19 다중 포인터와 동적 다차원 배열\6_19.cpp(31,9): warning C4101: 'ptr_3': unreferenced local variable
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 6- Matrix, String, Pointer, Reference\6_19 다중 포인터와 동적 다차원 배열\6_19.cpp(31,21): warning C4101: 'int_4': unreferenced local variable
+  6_19 다중 포인터와 동적 다차원 배열.vcxproj -> C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 6- Matrix, String, Pointer, Reference\Debug\6_19 다중 포인터와 동적 다차원 배열.exe
