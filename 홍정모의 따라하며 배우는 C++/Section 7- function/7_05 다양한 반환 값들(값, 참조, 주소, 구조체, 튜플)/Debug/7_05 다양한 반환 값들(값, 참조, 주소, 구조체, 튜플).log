@@ -1,0 +1,6 @@
+﻿  7_05.cpp
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 7- function\7_05 다양한 반환 값들(값, 참조, 주소, 구조체, 튜플)\7_05.cpp(92,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 7- function\7_05 다양한 반환 값들(값, 참조, 주소, 구조체, 튜플)\7_05.cpp(93,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 7- function\7_05 다양한 반환 값들(값, 참조, 주소, 구조체, 튜플)\7_05.cpp(22): warning C4172: returning address of local variable or temporary: value
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 7- function\7_05 다양한 반환 값들(값, 참조, 주소, 구조체, 튜플)\7_05.cpp(16): warning C4172: returning address of local variable or temporary: value
+  7_05 다양한 반환 값들(값, 참조, 주소, 구조체, 튜플).vcxproj -> C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 7- function\Debug\7_05 다양한 반환 값들(값, 참조, 주소, 구조체, 튜플).exe
