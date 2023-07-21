@@ -1,0 +1,4 @@
+﻿  8_03.cpp
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 8- Object Oriented Programming (OOP) - Basic\8_03 생성자 Constructors\8_03.cpp(76): error C2248: 'main::Second::Second': cannot access private member declared in class 'main::Second'
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 8- Object Oriented Programming (OOP) - Basic\8_03 생성자 Constructors\8_03.cpp(65,3): message : see declaration of 'main::Second::Second'
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 8- Object Oriented Programming (OOP) - Basic\8_03 생성자 Constructors\8_03.cpp(62,8): message : see declaration of 'main::Second'
