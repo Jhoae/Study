@@ -1,0 +1,3 @@
+﻿  14_01.cpp
+C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 14- Exception Handling\14_01 예외처리의 기본\14_01.cpp(12,16): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  14_01 예외처리의 기본.vcxproj -> C:\Users\ohjae\OneDrive\바탕 화면\따배C\TBCppStudy\C++ Section 14- Exception Handling\x64\Debug\14_01 예외처리의 기본.exe
